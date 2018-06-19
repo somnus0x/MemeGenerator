@@ -1,14 +1,4 @@
-@font-face {
-  font-family: 'Impact';
-  src: url('./font/Impact.ttf');
-}
-
-@font-face{
-  font-family: 'monomon';
-  src: url('./font/monomon.ttf'); 
-}
-
-.App {
+.MainPage {
   text-align: center; 
 }
 
