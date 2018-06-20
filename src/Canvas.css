@@ -1,4 +1,4 @@
-/* Preload Font */
 @font-face{
-
+    font-family: 'monomon';
+    src: url('fonts/monomon.ttf');
 }
