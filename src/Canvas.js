@@ -18,56 +18,74 @@ class Canvas extends React.Component {
 
     constructor(props){
       super(props);
-
-      
     }
 
     componentDidMount() {
       const image = new window.Image();
-      image.src = 'img/cheese.jpeg';
+      image.src = 'img/memeTemplate.png';
       image.onload = () => {
-        // setState will redraw layer
-        // because "image" property is changed
         this.setState({
           image: image
         });
       };
 
     }
+
+    componentDidUpdate() {
+      if(this.props.save == true){
+          // this.download(this.stageRef.getStage().toDataURL(),'meme.png','image/png').then(function(file){
+          //   console.log(file);
+          // })
+          this.saveBase64AsFile(this.stageRef.getStage().toDataURL(), 'meme.png')
+          // console.log(this.stageRef.getStage().toDataURL());
+          this.props.onSaved();
+      }
+    }
+
+    saveBase64AsFile(base64, fileName) {
+
+      var link = document.createElement("a");
+  
+      link.setAttribute("href", base64);
+      link.setAttribute("download", fileName);
+      link.click();
+  }
+
+    
     
     render() {
       var image = new window.Image();
-      image.src = 'img/cheese.jpeg';
-      console.log(image.width/2)
+      image.src = 'img/memeTemplate.png';
+      console.log(this.props.save); 
       return(
-        <Stage width={image.width} height={image.height}>
+        <Stage width={image.width} height={image.height} ref={node => { this.stageRef = node}}>
           <Layer>
-            <Image image={this.state.image} />
-            <Text  fontFamily = {'monomon'} 
+            <Image image={this.state.image}  />
+            <Text  fontFamily = {'Kanit'} 
                     y = {20} 
                     width = {image.width}
                     height = {image.height}
-                    draggable = {true} 
+
                     fontSize = {40}
                     fill = {'white'} 
                     stroke = {'black'}
                     strokeWidth = {1}
                     align='center'
                     wrap = 'char'
-                    text="สีหน้าของคุณเมื่อ" 
+                    text= {this.props.firstCaption}
             />
-            <Text  fontFamily = {'monomon'} 
+            <Text  fontFamily = {'Kanit'} 
                     y = {400} 
                     width = {image.width}
                     height = {image.height}
-                    draggable = {true} 
-                    fontSize = {40}
+
+                    fontSize = {35}
                     fill = {'white'} 
                     stroke = {'black'}
                     strokeWidth = {1}
                     align='center'
                     wrap = 'char'
-                    text="สีหน้าของคุณเมื่อ" 
+                    text={this.props.secondCaption} 
             />
             
           </Layer>
