@@ -31,27 +31,14 @@ class Canvas extends React.Component {
 
     }
 
-    componentDidUpdate() {
-      if(this.props.save == true){
-          // this.download(this.stageRef.getStage().toDataURL(),'meme.png','image/png').then(function(file){
-          //   console.log(file);
-          // })
-          this.saveBase64AsFile(this.stageRef.getStage().toDataURL(), 'meme.png')
-          // console.log(this.stageRef.getStage().toDataURL());
-          this.props.onSaved();
-      }
-    }
 
-    saveBase64AsFile(base64, fileName) {
-
+    captureCanvas(){
+      var base64 = this.stageRef.getStage().toDataURL();
       var link = document.createElement("a");
-  
-      link.setAttribute("href", base64);
-      link.setAttribute("download", fileName);
+      link.setAttribute('href', base64);
+      link.setAttribute('download','meme.png');
       link.click();
-  }
-
-    
+    }
     
     render() {
       var image = new window.Image();
