@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { Stage, Layer, Image, Text } from 'react-konva';
 import './Canvas.css';
-const font =  '40px Impact';
-const align = "center";
-const fontColor = 'white';
-const outlineColor = 'black';
-const lineWidth = 5;
-const shadowBlur = 5;
+
 
 class Canvas extends React.Component {
     
@@ -18,6 +13,7 @@ class Canvas extends React.Component {
 
     constructor(props){
       super(props);
+      this.captureCanvas = this.captureCanvas.bind(this);
     }
 
     componentDidMount() {
@@ -43,25 +39,23 @@ class Canvas extends React.Component {
     render() {
       var image = new window.Image();
       image.src = 'img/memeTemplate.png';
-      console.log(this.props.save); 
       return(
         <Stage width={image.width} height={image.height} ref={node => { this.stageRef = node}}>
           <Layer>
             <Image image={this.state.image}  />
-            <Text  fontFamily = {'Kanit'} 
+            <Text  fontFamily = {'BoonTook'} 
                     y = {20} 
                     width = {image.width}
                     height = {image.height}
-
                     fontSize = {40}
                     fill = {'white'} 
                     stroke = {'black'}
-                    strokeWidth = {1}
+                    strokeWidth = {1.5}
                     align='center'
                     wrap = 'char'
                     text= {this.props.firstCaption}
             />
-            <Text  fontFamily = {'Kanit'} 
+            <Text  fontFamily = {'BoonTook'} 
                     y = {400} 
                     width = {image.width}
                     height = {image.height}
@@ -69,7 +63,7 @@ class Canvas extends React.Component {
                     fontSize = {35}
                     fill = {'white'} 
                     stroke = {'black'}
-                    strokeWidth = {1}
+                    strokeWidth = {1.5}
                     align='center'
                     wrap = 'char'
                     text={this.props.secondCaption} 

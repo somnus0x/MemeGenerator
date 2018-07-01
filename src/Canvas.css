@@ -3,6 +3,12 @@
     src: url('fonts/monomon.ttf');
 }
 
+@font-face{
+    font-family: 'BoonTook';
+    src: url('fonts/BoonTook-Mon-Ultra.ttf');
+}
+
+
 canvas {
     padding-left: 0;
     padding-right: 0;

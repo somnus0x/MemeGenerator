@@ -5,9 +5,14 @@
   font-family : 'Kanit';
 }
 
+@font-face{
+  font-family: 'BoonTook';
+  src: url('fonts/BoonTook-Mon-Ultra.ttf');
+}
+
 .MainPage h1 {
   padding-top: 20px;
-  padding-bottom: 10px;
+  padding-bottom: 30px;
   font-weight: 700;
 }
 
@@ -16,6 +21,16 @@
 
 }
 
+.btn{
+  margin-top: 20px;
+}
+
+.mobile-container{
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+}
 .mobile-padding {
   margin-bottom: 80px;
 }
