@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MediaQuery from "react-responsive";
-import logo from "./logo.svg";
+import ReactGA from 'react-ga';
+import Config from 'Config'
 import "./App.css";
 import Canvas from "./Canvas.js";
 import Emoji from "./Emoji";
@@ -20,9 +21,20 @@ class MainPage extends React.Component {
       secondCaption: "",
       firstCaptionPlaceholder : "",
       secondCaptionPlaceholder : "",
+      GAInit : false,
     };
 
     this.canvasRef = React.createRef();
+    this.mobileCanvasRef = React.createRef();
+
+    if (!this.state.GAInit ){
+      ReactGA.initialize(Config.google_analytics_tracking_id);
+      ReactGA.pageview(window.location.pathname + window.location.search);
+      this.setState({GAInit : true});
+    }
+
+
+   
 
   }
   onFirstCaptionChange = (evt) => {
@@ -39,12 +51,23 @@ class MainPage extends React.Component {
       secondCaptionPlaceholder : "เมื่อเพื่อนขิงเรื่องเทียเต้อ",
     });
   }
+  onMobileTouch = () => {
+    this.mobileCanvasRef.current.captureCanvas();
+    ReactGA.event({
+      category: 'Mobile User',
+      action: 'Generate MEME'
+    })
+  }
+
   onClick = () => {
     this.canvasRef.current.captureCanvas();
+    ReactGA.event({
+      category: 'User',
+      action: 'Generate MEME'
+    })
   };
 
   onFirstCaptionInputFocus = () => {
-    console.log("focus")
     this.setState({
       firstCaptionPlaceholder : ""
     })
@@ -109,6 +132,7 @@ class MainPage extends React.Component {
         <Mobile>
          <div className = 'mobile-container'>
           <Canvas
+            ref={this.mobileCanvasRef}
             firstCaption={this.state.firstCaption}
             secondCaption={this.state.secondCaption}
           />
@@ -128,7 +152,7 @@ class MainPage extends React.Component {
             <button
               type="button"
               className="btn btn-success"
-              onClick={this.onClick}
+              onClick={this.onMobileTouch}
             >
               Generate MEME
             </button>
