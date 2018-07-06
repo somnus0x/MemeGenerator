@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import MediaQuery from "react-responsive";
-import ReactGA from 'react-ga';
-import Config from 'Config'
+import ReactGA from "react-ga";
+import Config from "Config";
 import "./App.css";
+import Input from "./Input.js";
 import Canvas from "./Canvas.js";
-import Emoji from "./Emoji";
+import Footer from "./Footer.js";
 
 const Desktop = ({ children }) => (
   <MediaQuery minWidth={1280} children={children} />
@@ -14,79 +15,77 @@ const Mobile = ({ children }) => (
 );
 
 class MainPage extends React.Component {
-  constructor(props) {
+  
+  constructor (props) {
     super(props);
     this.state = {
       firstCaption: "",
       secondCaption: "",
-      firstCaptionPlaceholder : "",
-      secondCaptionPlaceholder : "",
-      GAInit : false,
+      firstCaptionPlaceholder: "",
+      secondCaptionPlaceholder: "",
+      GAInit: false
     };
 
     this.canvasRef = React.createRef();
     this.mobileCanvasRef = React.createRef();
+  };
+  
+  onFirstCaptionChange = evt => {
+    this.setState({ firstCaption: evt.target.value });
+  };
 
-    if (!this.state.GAInit ){
+  onSecondCaptionChange = evt => {
+    this.setState({ secondCaption: evt.target.value });
+  };
+
+  componentDidMount = () => {
+    if (!this.state.GAInit) {
       ReactGA.initialize(Config.google_analytics_tracking_id);
       ReactGA.pageview(window.location.pathname + window.location.search);
-      this.setState({GAInit : true});
+      this.setState({ GAInit: true });
     }
 
-
-   
-
-  }
-  onFirstCaptionChange = (evt) => {
-    this.setState({ firstCaption: evt.target.value });
-  }
-  onSecondCaptionChange = (evt) => {
-    this.setState({ secondCaption: evt.target.value });
-  }
-  componentDidMount() {
     this.setState({
       firstCaption: "สีหน้าของคุณ",
       secondCaption: "เมื่อเพื่อนขิงเรื่องเทียเต้อ",
-      firstCaptionPlaceholder : "สีหน้าของคุณ",
-      secondCaptionPlaceholder : "เมื่อเพื่อนขิงเรื่องเทียเต้อ",
+      firstCaptionPlaceholder: "สีหน้าของคุณ",
+      secondCaptionPlaceholder: "เมื่อเพื่อนขิงเรื่องเทียเต้อ"
     });
   }
   onMobileTouch = () => {
     this.mobileCanvasRef.current.captureCanvas();
     ReactGA.event({
-      category: 'Mobile User',
-      action: 'Generate MEME'
-    })
-  }
+      category: "Mobile User",
+      action: "Generate MEME"
+    });
+  };
 
   onClick = () => {
     this.canvasRef.current.captureCanvas();
     ReactGA.event({
-      category: 'User',
-      action: 'Generate MEME'
-    })
+      category: "User",
+      action: "Generate MEME"
+    });
   };
 
   onFirstCaptionInputFocus = () => {
     this.setState({
-      firstCaptionPlaceholder : ""
-    })
-  }
+      firstCaptionPlaceholder: ""
+    });
+  };
 
   onSecondCaptionInputFocus = () => {
     this.setState({
-      secondCaptionPlaceholder : ""
-    })
-  }
+      secondCaptionPlaceholder: ""
+    });
+  };
 
-  
-
-  render() {
+  render = () => {
     return (
       <div className="MainPage">
-        <div className="container">
-          <h1>MEME-JANE-RATOR</h1>
-          <Desktop>
+        <h1>MEME-JANE-RATOR</h1>
+        <Desktop>
+          <div className="container">
             <div className="row">
               <div className="col-md-6 ">
                 <Canvas
@@ -96,20 +95,19 @@ class MainPage extends React.Component {
                 />
               </div>
 
-              <div className="col-md-4 ">
+              <div className="col-md-4 right-container">
                 <h2>Caption</h2>
                 <Input
                   placeholder={this.state.firstCaptionPlaceholder}
-                  
                   onChange={this.onFirstCaptionChange}
-                  onFocus = {this.onFirstCaptionInputFocus}
+                  onFocus={this.onFirstCaptionInputFocus}
                 />
 
                 <h2>Caption 2</h2>
                 <Input
                   placeholder={this.state.secondCaptionPlaceholder}
                   onChange={this.onSecondCaptionChange}
-                  onFocus = {this.onSecondCaptionInputFocus}
+                  onFocus={this.onSecondCaptionInputFocus}
                 />
                 <button
                   type="button"
@@ -120,65 +118,44 @@ class MainPage extends React.Component {
                 </button>
               </div>
             </div>
-           
-          </Desktop>
-          
-        </div>
-        <footer className = 'footer'>
-          <div className = 'col-lg-12'> 
-              Made with <Emoji symbol = '❤️' /> by @supasonk
           </div>
-      </footer>
+          <Footer desktop = {true} />
+        </Desktop>
         <Mobile>
-         <div className = 'mobile-container'>
-          <Canvas
-            ref={this.mobileCanvasRef}
-            firstCaption={this.state.firstCaption}
-            secondCaption={this.state.secondCaption}
-          />
-          <div className="mobile-padding">
-            <h2>Caption</h2>
-            <Input
-              placeholder={this.state.firstCaptionPlaceholder}
-              onChange={this.onFirstCaptionChange}
-              onFocus = {this.onFirstCaptionInputFocus}
+          <div className="mobile-container">
+            <Canvas
+              ref={this.mobileCanvasRef}
+              firstCaption={this.state.firstCaption}
+              secondCaption={this.state.secondCaption}
             />
-            <h2>Caption 2</h2>
-            <Input
-              placeholder={this.state.secondCaptionPlaceholder}
-              onChange={this.onSecondCaptionChange}
-              onFocus = {this.onSecondCaptionInputFocus}
-            />
-            <button
-              type="button"
-              className="btn btn-success"
-              onClick={this.onMobileTouch}
-            >
-              Generate MEME
-            </button>
+            <div className="mobile-padding">
+              <h2>Caption</h2>
+              <Input
+                placeholder={this.state.firstCaptionPlaceholder}
+                onChange={this.onFirstCaptionChange}
+                onFocus={this.onFirstCaptionInputFocus}
+              />
+              <h2>Caption 2</h2>
+              <Input
+                placeholder={this.state.secondCaptionPlaceholder}
+                onChange={this.onSecondCaptionChange}
+                onFocus={this.onSecondCaptionInputFocus}
+              />
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={this.onMobileTouch}
+              >
+                Generate MEME
+              </button>
+            </div>
           </div>
-          </div>
+          <Footer desktop = {false} />
         </Mobile>
-
       </div>
     );
   }
 }
 
-class Input extends React.Component {
-  render() {
-    return (
-      <div className="input-group mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder={this.props.placeholder}
-          onChange={this.props.onChange}
-          onFocus = {this.props.onFocus}
-        />
-      </div>
-    );
-  }
-}
 
 export default MainPage;

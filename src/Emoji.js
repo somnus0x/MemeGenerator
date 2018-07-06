@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class Emoji extends React.Component {
-    render(){
+    render = () =>{
         
         return(
             <span

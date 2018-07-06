@@ -13,10 +13,9 @@ class Canvas extends React.Component {
 
     constructor(props){
       super(props);
-      this.captureCanvas = this.captureCanvas.bind(this);
     }
 
-    componentDidMount() {
+    componentDidMount = () => {
       const image = new window.Image();
       image.src = 'img/memeTemplate.png';
       image.onload = () => {
@@ -28,7 +27,7 @@ class Canvas extends React.Component {
     }
 
 
-    captureCanvas(){
+    captureCanvas = () =>{
       var base64 = this.stageRef.getStage().toDataURL();
       var link = document.createElement("a");
       link.setAttribute('href', base64);
@@ -36,26 +35,26 @@ class Canvas extends React.Component {
       link.click();
     }
     
-    render() {
+    render = () => {
       var image = new window.Image();
       image.src = 'img/memeTemplate.png';
       return(
         <Stage width={image.width} height={image.height} ref={node => { this.stageRef = node}}>
           <Layer>
             <Image image={this.state.image}  />
-            <Text  fontFamily = {'BoonTook'} 
+            <Text  fontFamily = {'Prompt'} 
                     y = {20} 
                     width = {image.width}
                     height = {image.height}
                     fontSize = {40}
                     fill = {'white'} 
                     stroke = {'black'}
-                    strokeWidth = {1.5}
+                    strokeWidth = {1}
                     align='center'
                     wrap = 'char'
                     text= {this.props.firstCaption}
             />
-            <Text  fontFamily = {'BoonTook'} 
+            <Text  fontFamily = {'Prompt'} 
                     y = {400} 
                     width = {image.width}
                     height = {image.height}
@@ -63,7 +62,7 @@ class Canvas extends React.Component {
                     fontSize = {35}
                     fill = {'white'} 
                     stroke = {'black'}
-                    strokeWidth = {1.5}
+                    strokeWidth = {1}
                     align='center'
                     wrap = 'char'
                     text={this.props.secondCaption} 
